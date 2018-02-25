@@ -54,8 +54,10 @@ func make_entry() string {
 
     // add a date stamp
     time := time.Now()
-    stamp := time.Format("Monday Jan 1: ")
-    keepsake = stamp + keepsake
+    //time_string := time.String()
+    date_stamp := time.Format("Mon Jan 02")
+    time_stamp := time.Format("03:04:05 PM")
+    keepsake = date_stamp + " [" + time_stamp + "]: " + keepsake
 
     return keepsake
 }
