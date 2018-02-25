@@ -6,7 +6,8 @@ save notes to yourself from the command line
 - (optional) edit `config` file to set the `PATH` for where you want your notes
   saved. (by default, it is a file called `keepsakes.txt` in CWD)
 
-**usage**: `./keep <type your note here>`
+**usage**
+`./keep <type your note here>`
 
 **features**
 - automatically adds date stamp to entries
