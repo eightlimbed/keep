@@ -71,10 +71,8 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
-    // write to the file
-    fmt.Fprintf(file, keepsake + "\n")
-
-    // auto close file before main ends
     defer file.Close()
+
+    // write the entry (keepsake) to the file
+    fmt.Fprintf(file, keepsake + "\n")
 }
