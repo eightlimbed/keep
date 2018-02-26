@@ -15,6 +15,20 @@ import (
     "strings"
 )
 
+func make_entry(args string) string {
+
+    // convert args (type []string) to type string
+    entry := args
+
+    // add a time stamp
+    time := time.Now()
+    date_stamp := time.Format("Mon Jan 02")
+    time_stamp := time.Format("03:04:05 PM")
+    entry = date_stamp + " [" + time_stamp + "]: " + entry
+
+    return entry
+}
+
 func view_entries(filename string) {
 
     // e.g: keep -a -- displays contents of the notes file
@@ -36,20 +50,6 @@ func view_entries(filename string) {
     if exec_err != nil {
         log.Fatal(exec_err)
     }
-}
-
-func make_entry(args string) string {
-
-    // convert args (type []string) to type string
-    entry := args
-
-    // add a time stamp
-    time := time.Now()
-    date_stamp := time.Format("Mon Jan 02")
-    time_stamp := time.Format("03:04:05 PM")
-    entry = date_stamp + " [" + time_stamp + "]: " + entry
-
-    return entry
 }
 
 func main() {
@@ -75,8 +75,7 @@ func main() {
     entry := strings.Join(args, " ")
     entry_string := make_entry(entry)
 
-    file, err := os.OpenFile(filename,
-                             os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
+    file, err := os.OpenFile(filename, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
     if err != nil {
         log.Fatal(err)
     }
