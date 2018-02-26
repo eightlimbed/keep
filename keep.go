@@ -8,35 +8,10 @@ package main
 import (
     "fmt"
     "os"
-    "bufio"
     "log"
     "strings"
     "time"
 )
-
-func get_filename() string {
-
-    var tokens []string
-    var path string
-
-    // open config file for reading
-    file, err := os.OpenFile("config", os.O_RDONLY, 644)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
-
-    // read file line-by-line
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        // get file path name by tokenizing the line starting with "PATH="
-        if strings.HasPrefix(scanner.Text(), "PATH") {
-            tokens = strings.Split(scanner.Text(), "=")
-            path = tokens[1]
-        }
-    }
-    return path
-}
 
 func make_entry() string {
 
@@ -50,25 +25,26 @@ func make_entry() string {
     args := os.Args[1:]
 
     // convert args (type []string) to type string
-    keepsake := strings.Join(args, " ")
+    entry := strings.Join(args, " ")
 
     // add a date stamp
     time := time.Now()
     //time_string := time.String()
     date_stamp := time.Format("Mon Jan 02")
     time_stamp := time.Format("03:04:05 PM")
-    keepsake = date_stamp + " [" + time_stamp + "]: " + keepsake
+    entry = date_stamp + " [" + time_stamp + "]: " + entry
 
-    return keepsake
+    return entry
 }
 
 func main() {
 
-    keepsake := make_entry()
-    keepfile := get_filename()
+    path := os.Getenv("HOME")
+    entry := make_entry()
+    filename := path + "/notes.txt"
 
     // open up the  file, or make it if it doesn't exist
-    file, err := os.OpenFile(keepfile,
+    file, err := os.OpenFile(filename,
     os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
     if err != nil {
         log.Fatal(err)
@@ -76,5 +52,5 @@ func main() {
     defer file.Close()
 
     // write the entry (keepsake) to the file
-    fmt.Fprintf(file, keepsake + "\n")
+    fmt.Fprintf(file, entry + "\n")
 }
