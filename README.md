@@ -1,14 +1,12 @@
 ## keep
 save notes to yourself from the command line
 
-**set up**
-- clone this repo: `git clone https://github.com/eightlimbed/keep.git`
-- (optional) edit `config` file to set the `PATH` for where you want your notes
-  saved. (by default, it is a file called `keepsakes.txt` in CWD)
+**set up**: clone repo, then add `keep` somewhere in your `PATH`
 
-**usage**
-`./keep <type your note here>`
+**usage**: `keep <type your note here>`
+
+all your keep's will be stored in the file `~/notes.txt`. (based on your `$HOME`
+environment variable. not build for windows os.)
 
 **features**
 - automatically adds date stamp to entries
-- config file lets you choose where you want to save your notes
