@@ -45,7 +45,6 @@ func view_entries(filename string) {
     // syscall.Exec needs the environment to execute the process
     env := os.Environ()
 
-    fmt.Println(args)
     exec_err := syscall.Exec(exe, args, env)
     if exec_err != nil {
         log.Fatal(exec_err)
