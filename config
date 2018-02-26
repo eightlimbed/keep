@@ -1,3 +1,0 @@
-# PATH is where you want your notes to be saved
-# don't put any whitespace between the KEY and VAL (eg. PATH = /my/path)
-PATH=keepsakes.txt
