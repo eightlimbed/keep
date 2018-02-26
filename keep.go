@@ -1,6 +1,6 @@
-// keep: write and view notes to yourself from the command line
-// usage: ./keep <type your note here>
-// config: set the path for the file you want to save your notes in.
+// keep: save notes to yourself from the command line
+// usage: keep <type your note here>
+// options: -a : displays the contents of the notes file
 // author: lee gaines (@eightlimbed) -- feb 25, 2018
 
 package main
