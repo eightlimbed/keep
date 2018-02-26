@@ -8,28 +8,43 @@ package main
 import (
     "fmt"
     "os"
+    "os/exec"
     "log"
-    "strings"
     "time"
+    "syscall"
+    "strings"
 )
 
-func make_entry() string {
+func view_entries(filename string) {
 
-    // make sure to get at least one arg
-    if len(os.Args) < 2 {
-        fmt.Println("usage: ./keep <type your note here>")
-        os.Exit(1)
+    // e.g: keep -a -- displays contents of the notes file
+
+    // look for `less` on the path
+    exe, look_err := exec.LookPath("less")
+    if look_err != nil {
+        log.Fatal(look_err)
     }
 
-    // get string from args
-    args := os.Args[1:]
+    // give it an argument
+    args := []string{"less", filename}
+
+    // syscall.Exec needs the environment to execute the process
+    env := os.Environ()
+
+    fmt.Println(args)
+    exec_err := syscall.Exec(exe, args, env)
+    if exec_err != nil {
+        log.Fatal(exec_err)
+    }
+}
+
+func make_entry(args string) string {
 
     // convert args (type []string) to type string
-    entry := strings.Join(args, " ")
+    entry := args
 
-    // add a date stamp
+    // add a time stamp
     time := time.Now()
-    //time_string := time.String()
     date_stamp := time.Format("Mon Jan 02")
     time_stamp := time.Format("03:04:05 PM")
     entry = date_stamp + " [" + time_stamp + "]: " + entry
@@ -39,18 +54,32 @@ func make_entry() string {
 
 func main() {
 
+    // make sure to get at least one arg
+    if len(os.Args) < 2 {
+        fmt.Println("usage: ./keep <type your note here>")
+        os.Exit(1)
+    }
+
+    // get string from args
+    args := os.Args[1:]
     path := os.Getenv("HOME")
-    entry := make_entry()
     filename := path + "/notes.txt"
 
-    // open up the  file, or make it if it doesn't exist
+    // check for options: -a
+    if args[0] == "-a" {
+        view_entries(filename)
+        return
+    }
+
+    // default: write the entry to a file
+    entry := strings.Join(args, " ")
+    entry_string := make_entry(entry)
+
     file, err := os.OpenFile(filename,
-    os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
+                             os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
     if err != nil {
         log.Fatal(err)
     }
+    fmt.Fprintf(file, entry_string + "\n")
     defer file.Close()
-
-    // write the entry (keepsake) to the file
-    fmt.Fprintf(file, entry + "\n")
 }
