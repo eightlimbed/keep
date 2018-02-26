@@ -1,6 +1,8 @@
 ## keep
 save notes to yourself from the command line
 
+(https://imgur.com/a/cpATi)
+
 **set up**: clone repo, then add `keep` somewhere in your `PATH`
 
 **usage**: `keep <type your note here>`
