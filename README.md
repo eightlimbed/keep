@@ -1,7 +1,7 @@
 ## keep
 save notes to yourself from the command line
 
-![keep demo](https://preview.ibb.co/jQgZcc/keep_demo.gif)
+![keep demo](keep_demo.gif)
 
 **set up**: clone repo, then add `keep` somewhere in your `PATH`
 
